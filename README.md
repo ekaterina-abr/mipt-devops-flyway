@@ -13,24 +13,25 @@
     export PATH=$PATH:$HOME/.spawnctl/bin  
     spawnctl version  
     spawnctl auth  
-    spawnctl onboard  
-
+    spawnctl onboard
 
     spawnctl create data-container \  
       --image postgres:flyway-getting-started \  
       --name flyway-container \  
-      --lifetime 24h  
-  
+      --lifetime 24h
+
     "Data container 'flyway-container' created!  
     -> Host=instances.spawn.cc;Port=xxxxx;Username=xxxx;Database=foobardb;Password=xxxxxxxxx"
   
 #### Получить данные для соединения можно так же следующей командой:
 
     spawnctl get data-container flyway-container -o yaml
+    
+### Добавим в конфигурационный файл данные для соединения с базой данных:
 
     cd flyway-7.8.1  
     vim ./conf/flyway.conf
-  
+
     flyway.url=jdbc:postgresql://instances.spawn.cc:<Port>/foobardb  
     flyway.user=<User>  
     flyway.password=<Password> 
@@ -38,7 +39,7 @@
 ### Создадим миграцию базы данных:
 
     cd ./sql  
-    vim V1__Create_student_table.sql  
+    vim V1__Create_student_table.sql
 
     create table STUDENT (  
       ID int not null,  
@@ -49,39 +50,39 @@
 ### Применим миграцию:
 
     cd ../  
-    flyway migrate  
+    flyway migrate
 
     psql -h instances.spawn.cc -p <Port> -U <User>
-  
+
     <User>=# \l  
     <User>=# \c foobardb  
     foobardb=# \d flyway_schema_history  
     foobardb=# \d student  
     foobardb=# SELECT *  
     foobardb-# FROM flyway_schema_history;  
-    foobardb=# exit  
+    foobardb=# exit
   
 ### Добавим еще одну миграцию:
 
     cd ./sql  
-    vim V2__Add_students.sql 
-  
+    vim V2__Add_students.sq
+
     insert into STUDENT (ID, NAME, SURNAME) values (1, 'Alexey', 'Kozhevnikov');  
     insert into STUDENT (ID, NAME, SURNAME) values (2, 'Elizaveta', 'Dobraya');  
-    insert into STUDENT (ID, NAME, SURNAME) values (3, 'Petr', 'Ivanov'); 
+    insert into STUDENT (ID, NAME, SURNAME) values (3, 'Petr', 'Ivanov');
 
     cd ../  
-    flyway migrate  
+    flyway migrate
 
     psql -h instances.spawn.cc -p <Port> -U <User>
-  
+
     <User>=# \l  
     <User>=# \c foobardb  
     foobardb=# SELECT *  
     FROM flyway_schema_history;  
     foobardb=# SELECT *  
     FROM student;  
-    foobardb=# exit  
+    foobardb=# exit
 
 ### Вернуть БД к первоначальному состоянию:
 
