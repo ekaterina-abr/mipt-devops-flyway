@@ -86,7 +86,7 @@
 
 ### Вернуть БД к первоначальному состоянию:
 
-    spawnctl reset data-container flyway-container
+    flyway clean
 
     sql -h instances.spawn.cc -p 32683 -U spawn_admin_uBsj
 
