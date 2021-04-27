@@ -65,7 +65,7 @@
 ### Добавим еще одну миграцию:
 
     cd ./sql  
-    vim V2__Add_students.sq
+    vim V2__Add_students.sql
 
     insert into STUDENT (ID, NAME, SURNAME) values (1, 'Alexey', 'Kozhevnikov');  
     insert into STUDENT (ID, NAME, SURNAME) values (2, 'Elizaveta', 'Dobraya');  
